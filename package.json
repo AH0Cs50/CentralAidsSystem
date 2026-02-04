@@ -1,0 +1,26 @@
+{
+  "name": "centralaidssystem",
+  "version": "1.0.0",
+  "description": "central distributing aids system",
+  "license": "ISC",
+  "author": "Ahmed K Habeeb",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "dev": "nodemon dist/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "prisma": "^7.3.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.2.0",
+    "nodemon": "^3.1.11",
+    "typescript": "^5.9.3"
+  }
+}
