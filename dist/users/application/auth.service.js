@@ -1,7 +1,9 @@
 // src/application/services/AuthService.ts
-import jwt from "jsonwebtoken";
+import jwt, {} from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 import { HttpError } from '../../shared/HttpError.js';
+import {} from "ms";
+import { RefreshTokenEntry } from "../domain/entities/RefreshToken.entitiy.js";
 /**
  * General-purpose AuthService
  */
@@ -17,8 +19,9 @@ export class AuthService {
     // ACCESS TOKEN
     // ----------------------------
     createAccessToken(payload) {
+        const expiresIn = this.config.jwtExpiresIn;
         return jwt.sign(payload, this.config.jwtSecret, {
-            expiresIn: this.config.jwtExpiresIn,
+            expiresIn,
         });
     }
     verifyAccessToken(token) {
@@ -32,18 +35,24 @@ export class AuthService {
     // ----------------------------
     // REFRESH TOKEN
     // ----------------------------
-    createRefreshToken(userId) {
-        const token = jwt.sign({ sub: userId }, this.config.refreshSecret, {
-            expiresIn: this.config.refreshExpiresIn,
-            jwtid: uuidv4(),
+    createRefreshToken(userId, role) {
+        const expiresIn = this.config.refreshExpiresIn;
+        const token = jwt.sign({ sub: userId, role }, this.config.refreshSecret, {
+            expiresIn,
+            jwtid: uuidv4(), //jti
         });
         const decoded = jwt.decode(token);
+        if (!decoded || !decoded.jti || !decoded.exp) {
+            throw new Error("Failed to decode refresh token");
+        }
         const expiresAt = decoded.exp * 1000; // convert to ms
+        const expiresAtDate = new Date(decoded.exp * 1000);
+        const refreshTokenEntity = new RefreshTokenEntry(decoded.jti, token, userId, expiresAtDate, false);
         this.refreshTokens.set(token, {
             tokenId: decoded.jti,
             userId,
             revoked: false,
-            expiresAt,
+            expiresAt: new Date(expiresAt),
         });
         return token;
     }
@@ -73,7 +82,7 @@ export class AuthService {
     rotateRefreshToken(oldToken) {
         const userId = this.verifyRefreshToken(oldToken);
         this.revokeRefreshToken(oldToken);
-        const newAccessToken = this.createAccessToken({ sub: userId, email: "" }); // email can be fetched from DB
+        const newAccessToken = this.createAccessToken({ sub: userId, email: "", role: "user" }); // email can be fetched from DB
         const newRefreshToken = this.createRefreshToken(userId);
         return { accessToken: newAccessToken, refreshToken: newRefreshToken };
     }
