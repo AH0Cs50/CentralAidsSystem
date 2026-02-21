@@ -10,7 +10,7 @@ export interface IRefreshTokenRepository {
   /**
    * Find a refresh token by token string
    */
-  findByToken(token: string): Promise<RefreshTokenEntry | null>;
+  findByToken(token: string): Promise<RefreshTokenEntry | undefined>;
 
   /**
    * Revoke a refresh token
