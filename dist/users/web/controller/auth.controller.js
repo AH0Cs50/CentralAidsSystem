@@ -4,7 +4,7 @@ import { JWT_SECRET, JWT_EXPIRES_IN, JWT_REFRESH_SECRET, JWT_REFRESH_EXPIRES_IN 
 import { AuthService } from "../../application/auth.service.js";
 ;
 //repos imported here
-import { IRefreshTokenRepository } from '../../domain/repositories/IrefreshToken.js';
+import {} from '../../domain/repositories/IrefreshToken.js';
 //use_cases
 import { SignUpUser } from "../../application/usecase/singUp.usecase.js";
 //create dependencies 
@@ -16,10 +16,8 @@ const auth_config = {
 };
 //just for test need to make real instance 
 const refresh_repo = {};
-//to auth service need to inject config and refresh repo
-const authService = new AuthService(auth_config, refresh_repo);
-authService;
-//create one instance of users repo to use it in all use_cases
+//auth service need to inject config and refresh repo
+export const authService = new AuthService(auth_config, refresh_repo); // this auth service instance injected for all object that need it 
 export function singUp(req, res, next) {
     //create instance of use_case
 }

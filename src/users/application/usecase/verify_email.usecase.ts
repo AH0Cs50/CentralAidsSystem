@@ -4,11 +4,10 @@ import type { AuthService, TokenPayload } from "../auth.service.js";
 
 export class verifyEmail {
     constructor (private readonly userRepo: IUserRepository,
-        private readonly authService:AuthService,
     ){}
 
-    async execute (token):Promise<boolean> {
-        const payload:TokenPayload =this.authService.verifyAccessToken(token);
-        const userId=paly
+    async execute (userId:string):Promise<boolean> {
+        //get user data
+        return true;
     }
 }

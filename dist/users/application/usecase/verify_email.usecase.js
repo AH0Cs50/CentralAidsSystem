@@ -1,10 +1,9 @@
 export class verifyEmail {
     userRepo;
-    authService;
-    constructor(userRepo, authService) {
+    constructor(userRepo) {
         this.userRepo = userRepo;
-        this.authService = authService;
     }
-    async execute(token) {
+    async execute(userId) {
+        return true;
     }
 }
