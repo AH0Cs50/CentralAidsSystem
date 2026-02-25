@@ -1,0 +1,19 @@
+import { config } from "dotenv";
+
+config({path:'./config.env'})
+
+const {PORT, JWT_SECRET, JWT_EXPIRES_IN, JWT_REFRESH_SECRET, JWT_REFRESH_EXPIRES_IN, 
+    DB_HOST, DB_USER, DB_PASSWORD, DB_NAME
+} = process.env;
+
+export {
+    PORT,
+    JWT_SECRET,
+    JWT_EXPIRES_IN,
+    JWT_REFRESH_SECRET,
+    JWT_REFRESH_EXPIRES_IN,
+    DB_HOST,
+    DB_USER,
+    DB_PASSWORD,
+    DB_NAME
+}

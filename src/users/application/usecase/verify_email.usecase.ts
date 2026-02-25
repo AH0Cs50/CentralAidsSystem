@@ -1,13 +1,12 @@
+import type { ResetPasswordService } from "../../infrastructure/services/resetPassword.service.js";
 
-import type { IUserRepository } from "../../domain/repositories/IUserRepository.js";
-import type { AuthService, TokenPayload } from "../auth.service.js";
 
-export class verifyEmail {
-    constructor (private readonly userRepo: IUserRepository,
-    ){}
+export class VerifyEmailUseCase {
+    constructor(private readonly resetServiceToken: ResetPasswordService) { }
 
-    async execute (userId:string):Promise<boolean> {
-        //get user data
+    async execute(passResetToken: string): Promise<boolean> {
+
         return true;
     }
+
 }

@@ -1,41 +1,24 @@
-// src/application/services/AuthService.ts
+// src/infrastructure/services/AuthService.ts
+
+import type { ITokenService, TokenPayload, TokenServiceConfig } from '../../application/services/ITokenService.js';
+
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
-import { HttpError } from '../../shared/HttpError.js'
+import { HttpError } from '../../../shared/HttpError.js'
 import type { StringValue } from "ms"; //string value type for ms library, to ensure correct typing for expiresIn
 
-import { RefreshTokenEntry } from "../domain/entities/RefreshToken.entitiy.js";
-import type {IRefreshTokenRepository} from '../domain/repositories/IrefreshToken.js';
+import { RefreshTokenEntry } from "../../domain/entities/RefreshToken.entitiy.js";
+import type {IRefreshTokenRepository} from '../../domain/repositories/IrefreshToken.repository.js';
+
 
 /**
- * Payload for JWT tokens
-*/
-
-//consider as token payload type for both access and refresh tokens, can be extended with more fields as needed (e.g. role, permissions)
-export interface TokenPayload {
-  sub: string; // user id
-  email: string;
-  role: string;
-  status: string;
-}
-
-/**
- * AuthService configuration
+ * General-purpose TokenService
  */
-export interface AuthConfig {
-  jwtSecret: string;             // secret for access token
-  jwtExpiresIn: string;          // e.g. "15m"
-  refreshSecret: string;         // secret for refresh token
-  refreshExpiresIn: string;      // e.g. "7d"
-}
 
-/**
- * General-purpose AuthService
- */
-export class AuthService {
+export class TokenService implements ITokenService {
   private refreshTokens: Map<string, RefreshTokenEntry> = new Map(); //in memory refresh token store, can be replaced with a repository for persistence or live in Redis for distributed systems
 
-  constructor(private readonly config: AuthConfig,
+  constructor(private readonly config: TokenServiceConfig,
     private readonly refreshTokenRepo: IRefreshTokenRepository ) {}
   // ----------------------------
   // ACCESS TOKEN
@@ -125,5 +108,4 @@ export class AuthService {
     }
   }
 
-  
 }

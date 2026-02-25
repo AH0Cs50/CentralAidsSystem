@@ -1,5 +1,5 @@
 import express from 'express';
-import { PORT } from './config/config.js';
+import { PORT } from './shared/config/config.js';
 //routers
 import authRouter from './users/web/routes/auth.route.js';
 

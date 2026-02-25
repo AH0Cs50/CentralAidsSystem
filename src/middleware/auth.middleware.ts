@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction  } from "express";
-import { authService } from "../users/web/controller/auth.controller.js";
-import type { TokenPayload } from "../users/application/auth.service.js";
+import { authService } from "../shared/container.js";
+import type { TokenPayload } from "../users/infrastructure/services/token.service.js";
 
 declare module "express-serve-static-core" {
   interface Request {

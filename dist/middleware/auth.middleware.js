@@ -1,4 +1,4 @@
-import { authService } from "../users/web/controller/auth.controller.js";
+import { authService } from "../shared/container.js";
 export function authMiddleWare() {
     //wrapping middleware to use other dependencies like auth service 
     return function authMiddleWare(req, res, next) {
