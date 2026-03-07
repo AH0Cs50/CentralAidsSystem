@@ -1,5 +1,5 @@
 // src/application/services/ITokenService.ts
-import type { RefreshTokenEntry } from '../../domain/entities/RefreshToken.entitiy.js';
+import type { RefreshTokenEntry } from '../../domain/entities/RefreshToken.entity.js';
 
 /**
  * Payload for JWT tokens
@@ -11,6 +11,11 @@ export interface TokenPayload {
   email: string;
   role: string;
   status: string;
+}
+
+export interface emailTokenPayload {
+  sub: string,
+  email: string,
 }
 
 /**
@@ -58,6 +63,7 @@ export interface ITokenService {
   /**
    * Revokes a refresh token
    */
-  revokeRefreshToken(token: string): Promise<void>;
+  revokeRefreshToken(token: string): Promise<boolean>;
+
 
 }

@@ -1,5 +1,12 @@
 // users/domain/services/IEmailService.ts
 
+export interface SMTPConfig {
+  host: string;
+  port: number;
+  user: string;
+  pass: string;
+}
+
 export interface IEmailService {
   /**
    * Send an email to verify a user account.

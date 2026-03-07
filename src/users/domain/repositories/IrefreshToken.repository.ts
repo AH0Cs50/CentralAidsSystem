@@ -1,5 +1,5 @@
 // src/domain/repositories/IRefreshTokenRepository.ts
-import { RefreshTokenEntry } from "../entities/RefreshToken.entitiy.js";
+import { RefreshTokenEntry } from "../entities/RefreshToken.entity.js";
 
 export interface IRefreshTokenRepository {
   /**

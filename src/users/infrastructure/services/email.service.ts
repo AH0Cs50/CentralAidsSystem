@@ -1,18 +1,12 @@
 // src/infrastructure/services/EmailService.ts
 import nodemailer from 'nodemailer';
-import { type IEmailService } from "../../domain/services/IEmailService.js";
+import type { IEmailService, SMTPConfig } from "../../domain/services/IEmailService.js";
 
-interface SMPTConfig {
-  host: string;
-  port: number;
-  user: string;
-  pass: string;
-}
 
 export class EmailService implements IEmailService {
   private transporter;
 
-  constructor(config: SMPTConfig) {
+  constructor(config: SMTPConfig) {
     // Configure your SMTP transporter
     this.transporter = nodemailer.createTransport({
       host: config.host,

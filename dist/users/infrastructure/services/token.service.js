@@ -1,4 +1,3 @@
-// src/infrastructure/services/AuthService.ts
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 import { HttpError } from '../../../shared/HttpError.js';

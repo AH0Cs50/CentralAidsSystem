@@ -1,7 +1,7 @@
 //You extract the primitive value (string) when saving, and recreate the VO when loading.
 //VO represent value domain with own rules for value in this case the email
 export class Email {
-  private constructor(public readonly value: string) {}
+  private constructor(public readonly value: string) { }
 
   static create(email: string): Email {
     if (!Email.isValid(email)) {

@@ -3,7 +3,7 @@ import { HttpError } from "../../../shared/HttpError.js";
 import { authService, userRepo } from "../../../shared/container.js";
 //use_cases
 import { SignUpUser } from "../../application/usecase/singUp.usecase.js";
-import { verifyEmail as verifyEmailUsecase } from "../../application/usecase/verify_email.usecase.js";
+import { verifyEmail as verifyEmailUsecase } from "../../application/usecase/sendVerifyLinkViaEmail.usecase.js";
 export async function singUp(req, res, next) {
     const { first_name, last_name, email, password } = req.body;
     //create instance of use_case

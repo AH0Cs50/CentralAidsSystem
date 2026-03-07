@@ -1,6 +1,6 @@
 // users/domain/services/IResetPasswordTokenService.ts
 
-export interface IResetPasswordTokenService {
+export interface IpasswordResetTokenService {
   /**
    * Generate a new password reset token for a user
    * @param userId The ID of the user requesting a reset
@@ -27,4 +27,6 @@ export interface IResetPasswordTokenService {
   //  * @param userId The user ID
   //  */
   // revokeAllTokensForUser?(userId: string): Promise<boolean>;
+  revokeAllTokensForUser(userId: string): Promise<boolean>;
+
 }

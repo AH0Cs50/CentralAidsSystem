@@ -1,4 +1,5 @@
-import type {User} from '../entities/user.entity.js'
+import type { User } from '../entities/user.entity.js'
+import type { Email } from '../value-objects/Email.js';
 
 export interface IUserRepository {
   /**
@@ -6,7 +7,7 @@ export interface IUserRepository {
    * @param email - The email of the user to find.
    * @returns A User entity if found, otherwise null.
    */
-  findByEmail(email: string): Promise<User | null>;
+  findByEmail(email: Email): Promise<User | null>;
 
   /**
    * Finds a user by their unique ID.
@@ -32,4 +33,5 @@ export interface IUserRepository {
    * Optional depending on whether save() covers updates.
    */
   update(user: User): Promise<void>;
+
 }

@@ -1,15 +1,11 @@
-import {compare} from 'bcrypt'; // For password hashing in real app
+import { compare } from 'bcrypt'; // For password hashing in real app
 import type { Email } from '../value-objects/Email.js';
+import type { Role } from '../../../shared/types.js';
 
 export enum Status {
-  active='ACTIVE',
-  suspend='SUSPENDED',
-  deleted='DELETED',
-}
-
-export enum Role {
-  admin='ADMIN',
-  organization='ORGANIZATION',
+  active = 'ACTIVE',
+  suspend = 'SUSPENDED',
+  deleted = 'DELETED',
 }
 
 export class User {
@@ -21,52 +17,61 @@ export class User {
     //extract the primitive value (string) when saving, and recreate the VO when loading.
     public readonly email: Email,
     private passwordHash: string,
-    private  status:Status,
-    private role:Role,
-    private  email_verified:boolean,
+    private status: Status,
+    private role: Role,
+    private email_verified: boolean,
 
   ) {
   }
 
   async checkPassword(password: string): Promise<boolean> {
-    return compare(password,this.passwordHash);
+    return compare(password, this.passwordHash);
   }
 
-  changePassword(newPassword: string) {
-    if(newPassword.length < 8) {
-      throw new Error('Password must be at least 8 characters long');
-    }
-    this.passwordHash = newPassword;
+  changePassword(hashedPassword: string) {
+    if (!hashedPassword) throw new Error("Password cannot be empty");
+    this.passwordHash = hashedPassword;
   }
 
-  changeRole(role:Role) {
-    this.role=role;
+  changeRole(role: Role): boolean {
+    this.role = role;
+    return true;
   }
 
-  getRole():string {
+  getRole(): string {
     return this.role
   }
 
-  changeStatus(status:Status) {
-    this.status=status;
+  changeStatus(status: Status): boolean {
+    this.status = status;
+    return true;
   }
 
-  getStatus ():string {
+  getStatus(): string {
     return this.status;
   }
 
-  verifyEmailStatus():void {
-    this.email_verified=true;
+  isAccountLocked(): boolean {
+    return this.status === Status.suspend;
   }
 
-  getUserData():object {
+  verifyEmailStatus(): boolean {
+    this.email_verified = true;
+    return true;
+  }
+
+  isEmailVerified(): boolean {
+    return this.email_verified;
+  }
+
+  getUserData(): object {
     return {
-      id:this.id,
-      first_name:this.first_name,
-      last_name:this.last_name,
-      email:this.email.value, // extract primitive value from VO
-      status:this.status,
-      email_verified:this.email_verified,
+      id: this.id,
+      first_name: this.first_name,
+      last_name: this.last_name,
+      email: this.email.value, // extract primitive value from VO
+      status: this.status,
+      email_verified: this.email_verified,
     }
   }
 

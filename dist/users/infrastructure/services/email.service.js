@@ -1,24 +1,23 @@
 // src/infrastructure/services/EmailService.ts
 import nodemailer from 'nodemailer';
-import {} from "../../domain/services/IEmailService.js";
 export class EmailService {
     transporter;
-    constructor() {
+    constructor(config) {
         // Configure your SMTP transporter
         this.transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST,
-            port: Number(process.env.SMTP_PORT) || 587,
+            host: config.host,
+            port: config.port,
             secure: false, // true for 465, false for other ports
             auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS,
+                user: config.user,
+                pass: config.pass,
             },
         });
     }
-    async sendVerificationEmail(to, token) {
-        const link = `${process.env.APP_URL}/verify-email?token=${token}`;
+    async sendVerificationEmail(to, userId) {
+        const link = `${process.env.APP_URL}/verify-email?token=${userId}`;
         const subject = "Verify Your Account";
-        const body = `<p>Please click the link to verify your account: <a href="${link}">${link}</a></p>`;
+        const body = `<p>Please click the link to verify your account: <a href="${link}">Verify Account</a></p>`;
         await this.sendEmail(to, subject, body);
     }
     async sendPasswordResetEmail(to, resetToken) {

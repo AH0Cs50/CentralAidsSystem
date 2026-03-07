@@ -1,11 +1,7 @@
 export class PasswordResetUseCase {
     userRepository;
-    emailService;
-    tokenService;
-    constructor(userRepository, emailService, tokenService) {
+    constructor(userRepository) {
         this.userRepository = userRepository;
-        this.emailService = emailService;
-        this.tokenService = tokenService;
     }
     async execute(userId) {
         const user = await this.userRepository.findById(userId);
